@@ -1,0 +1,10 @@
+FER2013_TRAIN_ANNOTATION = 'annotations/train_fer2013_annotations.csv'
+FER2013_TEST_ANNOTATION = 'annotations/test_fer2013_annotations.csv'
+STUDENT_ANNOTAION = 'annotations/student_emotion_annotations.csv'
+IMAGE_SIZE = 64
+SOURCE_EPOCH = 50
+SOURCE_BATCH_SIZE = 64
+TRAINED_MODEL_PATH = 'trained_models/source.pt'
+RAVGRAD_BATCH_SIZE = 64
+RAVGRAD_EPOCH = 20
+RAVGRAD_LEARING_RATE = 5e-5
