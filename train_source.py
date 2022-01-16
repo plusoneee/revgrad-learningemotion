@@ -71,16 +71,17 @@ if __name__ == '__main__':
     criterion = torch.nn.CrossEntropyLoss()
     
     best_accuracy = 0
+    step = 0
     
     for epoch in range(1, cnf.SOURCE_EPOCH+1):
         train_loss, train_accuracy = train(model, train_loader, criterion, optim=optim)
-        writer.add_scalar('Train Loss', float(train_loss), epoch)
-        writer.add_scalar('Train Accuracy', float(train_accuracy), epoch)
+        writer.add_scalar('Train Loss', float(train_loss), step)
+        writer.add_scalar('Train Accuracy', float(train_accuracy), step)
     
         with torch.no_grad():
             val_loss, val_accuracy = valid(model, val_loader, criterion)
-            writer.add_scalar('Validation Loss', float(val_loss), epoch)
-            writer.add_scalar('Validation Accuracy', float(val_accuracy), epoch)
+            writer.add_scalar('Validation Loss', float(val_loss), step)
+            writer.add_scalar('Validation Accuracy', float(val_accuracy), step)
 
         tqdm.write(f'EPOCH {epoch:03d}: train_loss={train_loss:.4f}, train_accuracy={train_accuracy:.4f} '
                    f'val_loss={val_loss:.4f}, val_accuracy={val_accuracy:.4f}')
@@ -91,5 +92,5 @@ if __name__ == '__main__':
             torch.save(model.state_dict(), cnf.TRAINED_MODEL_PATH)
 
         lr_schedule.step(val_loss)
-
+        step+=1
 

@@ -71,6 +71,8 @@ def main():
     target_loader = create_target_dataloader(half_batch, shuffle=True)
     optim = torch.optim.Adam(list(discriminator.parameters()) + list(model.parameters()), lr=cnf.RAVGRAD_LEARING_RATE)
 
+    step = 0
+
     for epoch in range(1, cnf.RAVGRAD_EPOCH+1):
         batches = zip(source_loader, target_loader)
         n_batches = min(len(source_loader), len(target_loader))
@@ -107,9 +109,9 @@ def main():
         tqdm.write(f'EPOCH {epoch:03d}: domain_loss={mean_loss:.4f}, '
                    f'source_accuracy={mean_accuracy:.4f}')
         
-        writer.add_scalar('Domain Loss', float(mean_loss), epoch)
-        writer.add_scalar('Source Accuracy', float(mean_accuracy), epoch)
-
+        writer.add_scalar('Domain Loss', float(mean_loss), step)
+        writer.add_scalar('Source Accuracy', float(mean_accuracy), step)
+        step +=1
 
         torch.save(model.state_dict(), 'trained_models/revgrad.pt')
 
